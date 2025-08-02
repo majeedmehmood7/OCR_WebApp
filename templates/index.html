@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Web App</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Image to Text Magic</h1>
+    </header>
+    <div class="container">
+        <div class="upload-section">
+            <form action="/upload" method="post" enctype="multipart/form-data" id="upload-form">
+                <label for="file-input" class="file-label">Choose Your Image</label>
+                <input type="file" id="file-input" name="file" accept="image/*" required>
+                <button type="submit" class="magic-button">Unveil the Text!</button>
+                <button type="button" class="magic-button reset-button" onclick="resetForm()">Reset</button>
+            </form>
+        </div>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        {% if text %}
+            <div class="result-section">
+                <h2>Extracted Magic Text:</h2>
+                <pre class="text-box">{{ text }}</pre>
+                <h2>Uploaded Image:</h2>
+                <img src="/uploads/{{ filename }}" alt="Uploaded Image" class="uploaded-image">
+            </div>
+        {% endif %}
+    </div>
+    <script>
+        function resetForm() {
+            document.getElementById('upload-form').reset();
+            document.querySelector('.result-section').style.display = 'none';
+            document.querySelector('.error').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
